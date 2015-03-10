@@ -49,7 +49,10 @@ public:
 	bool isPlaying(void) { return playing; }
 	uint32_t positionMillis(void);
 	uint32_t lengthMillis(void);
+        void set_play_rate(float r);
 	virtual void update(void);
+        void set_bit_filter(int bits);
+
 private:
 	File rawfile;
 	uint32_t file_size;
@@ -61,6 +64,8 @@ private:
         volatile int m_input_data_len;
         volatile float m_input_pos;        
         volatile float m_input_increment;
+        volatile unsigned int m_bit_filter;
+
 };
 
 #endif

@@ -111,7 +111,7 @@ void WavMangler::update(void)
                 m_input_data_len = n/2;
               }
               
-              block->data[i] = m_input_data[(int)m_input_pos];
+              block->data[i] = m_input_data[(int)m_input_pos] & m_bit_filter;
               m_input_pos += m_input_increment;
           }
 
@@ -139,4 +139,19 @@ uint32_t WavMangler::lengthMillis(void)
 {
 	return ((uint64_t)file_size * B2M) >> 32;
 }
+
+void WavMangler::set_play_rate(float r) {
+  if(r < 0.001) r = 0.001;
+  if(r > 3) r = 3;
+  m_input_increment = r;
+}
+void WavMangler::set_bit_filter(int bits) {
+  unsigned int f = ;
+  while(bits-- > 0) {
+    f >>=1;
+    f |= 0xc000;
+  }
+  m_bit_filter = f;
+}
+
 
